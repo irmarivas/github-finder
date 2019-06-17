@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
+import Navbar from './components/layout/Navbar';
+import Users from './components/user/Users';
 
 class App extends Component {
-  lastName = () => {
-    return `Rivas`;
+
+  constructor() {
+    super();
+    console.log('CONSTRUCTOR IS CALLED or EXECUTED or INVOKED');
   }
+
   render(){
-    const name = 'Irma';
 
     return (
       <div className="App">
-        <h1>
-            Hello {name} {this.lastName()}
-        </h1>
+        <Navbar title={'Github Finder'} iconClass={"fab fa-github"} whatever={"navbar bg-primary"}/>
+        <div className="container">
+          <Users />
+        </div>
       </div>
     );
   }
