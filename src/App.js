@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Users from './components/user/Users';
-import { async } from 'q';
+
+const { CLIENT_ID, CLIENT_SECRET } = process.env;
 
 class App extends Component {
   state = {
@@ -36,7 +37,14 @@ class App extends Component {
   }
 
   fetchUsers = async () => {
-    const data = await fetch('https://api.github.com/users');
+    this.setState(
+      {
+        isLoading: true 
+      }
+    );
+
+    const url = `https://api.github.com/users?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`;
+    const data = await fetch(url);
     const users = await data.json();
     
     this.setState(
