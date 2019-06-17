@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Users from './components/user/Users';
+import Search from './components/user/Search';
+
 
 const { CLIENT_ID, CLIENT_SECRET } = process.env;
 
@@ -24,6 +26,7 @@ class App extends Component {
       <div className="App">
         <Navbar title={'Github Finder'} iconClass={"fab fa-github"} whatever={"navbar bg-primary"}/>
         <div className="container">
+          <Search />
           <Users isLoading={isLoading} users={users} />
         </div>
       </div>
