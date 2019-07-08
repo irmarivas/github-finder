@@ -10,12 +10,11 @@ const { CLIENT_ID, CLIENT_SECRET } = process.env;
 class App extends Component {
   state = {
     users: [],
-    isLoading: true
+    isLoading: false
 
   }
   constructor() {
     super();
-    console.log('CONSTRUCTOR IS CALLED or EXECUTED or INVOKED');
   }
 
   render(){
@@ -26,29 +25,24 @@ class App extends Component {
       <div className="App">
         <Navbar title={'Github Finder'} iconClass={"fab fa-github"} whatever={"navbar bg-primary"}/>
         <div className="container">
-          <Search />
+          <Search searchUsers={this.searchUsers} />
           <Users isLoading={isLoading} users={users} />
         </div>
       </div>
     );
   }
 
-  componentDidMount(){
-    console.log('COMPONENT MOUNTED SUCCESSFULLY');
-    console.log('MAKE REQUESTS HERE');
-    this.fetchUsers();
-  }
-
-  fetchUsers = async () => {
+  fetchUsers = async searchText => {
     this.setState(
       {
         isLoading: true 
       }
     );
 
-    const url = `https://api.github.com/users?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`;
-    const data = await fetch(url);
-    const users = await data.json();
+    const url = `https://api.github.com/search/users?q=${searchText}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`;
+    const data =await fetch(url);
+    const res = await data.json();
+    const users = res.items;
     
     this.setState(
       {
@@ -56,10 +50,13 @@ class App extends Component {
         isLoading: false
       }
     );
-
-    console.log(users);
   }
 
+  searchUsers = async searchText => {
+    this.fetchUsers(searchText);
+
   }
+
+}
 
 export default App;
